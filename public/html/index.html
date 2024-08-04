@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/media.css" />
+  </head>
+
+  <body>
+    <div class="board">
+      <div class="gameField">
+        <div class="timer">00</div>
+        <div class="score">0</div>
+        <div class="record">Ваш рекорд: <span>0</span></div>
+        <button class="start">Начать игру</button>
+        <div class="selection">
+          <p>Выберите длительность раунда</p>
+          <div class="seconds">
+            <button data-sec="20">20</button>
+            <button data-sec="40">40</button>
+            <button data-sec="60">60</button>
+          </div>
+        </div>
+        <h2 class="timeOfStart">
+          Начало через
+          <p>3</p>
+        </h2>
+        <h2 class="gameover-title">
+          <span>Счет</span>
+          <button>Заново</button>
+        </h2>
+      </div>
+    </div>
+
+    <script src="scripts/script.js"></script>
+  </body>
+</html>
