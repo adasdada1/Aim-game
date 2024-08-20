@@ -3,12 +3,18 @@
   src: url("/fonts/HomeVideo-Regular.woff"), url("/fonts/HomeVideo-Bold.woff") format("woff");
   font-display: swap;
 }
+@font-face {
+  font-family: "Better-VCR";
+  src: url("/fonts/Better-VCR-6.1.woff") format("woff");
+  font-display: swap;
+}
 body {
   font-family: "HomeVideo";
   display: -ms-grid;
   display: grid;
   place-content: center;
   background-color: #0f0e12;
+  gap: 20px;
 }
 
 .board {
@@ -20,6 +26,10 @@ body {
   -webkit-box-shadow: 0px 0px 17px -2px rgb(67, 67, 67) inset;
           box-shadow: 0px 0px 17px -2px rgb(67, 67, 67) inset;
   text-shadow: 0px 0px 11px rgb(255, 255, 255);
+}
+
+.wrapper {
+  width: 500px;
 }
 
 .gameField {
@@ -46,7 +56,7 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   gap: 5px;
-  font-size: 40px;
+  font-size: clamp(30px, 4vw, 40px);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -66,7 +76,7 @@ button {
           box-shadow: 0px 0px 10px 3px rgb(255, 255, 255) inset, 0px 0px 10px 4px hsl(0, 0%, 100%);
   padding: 10px;
   border-radius: 10px;
-  font-size: 30px;
+  font-size: clamp(25px, 4vw, 30px);
   font-weight: 900;
   color: white;
   text-shadow: 0px 0px 11px rgb(255, 255, 255);
@@ -111,7 +121,7 @@ button {
   gap: 15px;
 }
 .selection p {
-  font-size: 30px;
+  font-size: clamp(25px, 4vw, 30px);
   text-align: center;
   font-weight: 600;
 }
@@ -130,11 +140,14 @@ button {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .timeOfStart {
   text-align: center;
-  font-size: 40px;
+  font-size: clamp(30px, 4vw, 40px);
   -webkit-transform: translateY(-200vh);
           transform: translateY(-200vh);
   -webkit-transition: -webkit-transform 1s 0s ease-in-out;
@@ -164,7 +177,7 @@ button {
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
   top: 0;
-  font-size: 25px;
+  font-size: clamp(20px, 4vw, 25px);
 }
 
 .circle {
@@ -218,4 +231,246 @@ button {
     -webkit-transform: scale(0);
             transform: scale(0);
   }
+}
+h1 {
+  color: white;
+  font-size: clamp(30px, 4vw, 40px);
+  text-shadow: 0px 0px 11px rgb(255, 255, 255);
+  text-align: center;
+}
+
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  color: white;
+  text-shadow: 0px 0px 3px rgb(255, 255, 255);
+}
+form label {
+  font-size: clamp(15px, 4vw, 20px);
+}
+form input {
+  font-family: "Better-VCR";
+  outline: none;
+  padding: 2.5px 5px;
+  border: 2px #878787 solid;
+  font-size: clamp(15px, 4vw, 20px);
+  border-radius: 5px;
+  color: white;
+  -webkit-box-shadow: 0px 0px 17px -2px rgb(104, 104, 104) inset;
+          box-shadow: 0px 0px 17px -2px rgb(104, 104, 104) inset;
+  background: none;
+  text-shadow: 0px 0px 3px rgb(255, 255, 255);
+}
+
+#passwordError {
+  margin-bottom: 25px;
+}
+
+.error {
+  font-size: clamp(13px, 2vw, 16px);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.error-Visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.wrapper {
+  -webkit-box-shadow: 0px 0px 17px -2px rgb(67, 67, 67) inset;
+          box-shadow: 0px 0px 17px -2px rgb(67, 67, 67) inset;
+  padding: 50px;
+  background-color: #13121c;
+}
+.wrapper button {
+  font-size: clamp(20px, 2vw, 25px);
+  margin-bottom: 20px;
+}
+.wrapper a {
+  color: white;
+  text-decoration: none;
+  font-size: clamp(15px, 2vw, 20px);
+  text-align: center;
+}
+
+.inputFail {
+  border: 2px #c62828 solid;
+}
+
+.spinner-block {
+  text-align: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.spinner {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+.spinner:before, .spinner:after {
+  content: "";
+  display: block;
+  position: absolute;
+  border-width: 4px;
+  border-style: solid;
+  border-radius: 50%;
+}
+
+.spinner.spinner-1 {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+@-webkit-keyframes rotate-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@keyframes rotate-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes anti-rotate-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+@keyframes anti-rotate-animation {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(-360deg);
+            transform: rotate(-360deg);
+  }
+}
+.spinner.spinner-1:before {
+  width: 42px;
+  height: 42px;
+  border-bottom-color: white;
+  border-right-color: white;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-color: rgba(255, 255, 255, 0);
+  -webkit-filter: drop-shadow(0px 0px 3px #ffffff);
+          filter: drop-shadow(0px 0px 3px #ffffff);
+  -webkit-animation: rotate-animation 1s linear 0s infinite;
+          animation: rotate-animation 1s linear 0s infinite;
+}
+.spinner.spinner-1:after {
+  width: 29.4px;
+  height: 29.4px;
+  border-bottom-color: white;
+  border-right-color: white;
+  border-top-color: rgba(255, 255, 255, 0);
+  border-left-color: rgba(255, 255, 255, 0);
+  -webkit-filter: drop-shadow(0px 0px 3px #ffffff);
+          filter: drop-shadow(0px 0px 3px #ffffff);
+  -webkit-animation: anti-rotate-animation 0.85s linear 0s infinite;
+          animation: anti-rotate-animation 0.85s linear 0s infinite;
+}
+
+
+.records {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  gap: 20px;
+}
+.records__list {
+  font-size: clamp(20px, 4vw, 30px);
+  color: white;
+  text-shadow: 0px 0px 11px rgb(255, 255, 255);
+}
+.records .back {
+  margin-bottom: 10px;
+  background-color: inherit;
+  border: solid white 2px;
+  -webkit-box-shadow: 0px 0px 10px 3px rgb(255, 255, 255) inset, 0px 0px 10px 4px hsl(0, 0%, 100%);
+          box-shadow: 0px 0px 10px 3px rgb(255, 255, 255) inset, 0px 0px 10px 4px hsl(0, 0%, 100%);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: clamp(20px, 4vw, 25px);
+  font-weight: 900;
+  color: white;
+  text-shadow: 0px 0px 11px rgb(255, 255, 255);
+  cursor: pointer;
+}
+.records a, .records button {
+  font-size: clamp(14px, 2vw, 18px);
+}
+.record {
+  -webkit-transition: all 0.2s 0s ease;
+  transition: all 0.2s 0s ease;
+}
+
+.go-to-records {
+  background-color: inherit;
+  border: solid white 2px;
+  -webkit-box-shadow: 0px 0px 10px 3px rgb(255, 255, 255) inset, 0px 0px 10px 4px hsl(0, 0%, 100%);
+  box-shadow: 0px 0px 10px 3px rgb(255, 255, 255) inset, 0px 0px 10px 4px hsl(0, 0%, 100%);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 900;
+  color: white;
+  text-shadow: 0px 0px 11px rgb(255, 255, 255);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+
+.go-to-records--wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }

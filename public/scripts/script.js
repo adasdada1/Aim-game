@@ -7,24 +7,54 @@ const timer = document.querySelector(".timer");
 const score = document.querySelector(".score");
 const selection = document.querySelector(".selection");
 const timeOfStart = document.querySelector(".timeOfStart");
+const record = document.querySelector(".record");
 
 let timerId;
 let timerIdForStart;
 const { width, height } = coords;
-
-let num = 0;
+let secs = 0;
 let isRestart = false;
+
+async function getRecords() {
+  const response = await fetch("/get-scores");
+  const data = await response.json();
+  return data;
+}
+
+getRecords().then((data) => {
+  localStorage.clear();
+  if (Object.keys(data).length === 0) {
+    return;
+  }
+  for (const key in data.records) {
+    localStorage.setItem(key, data.records[key]);
+  }
+});
+
 startButton.addEventListener("click", () => {
   timeOfStart.style.transform = "translateY(-100vh)";
   selection.style.transform = "translateY(0)";
   startButton.style.transform = "translateY(100vh)";
 });
 
-function boardClickHandler(e) {
+async function boardClickHandler(e) {
   if (e.target.classList.contains("circle")) {
     e.target.remove();
-    num++;
-    score.textContent = num;
+
+    const response = await fetch("/update-score", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ action: "hit" }),
+    });
+    const data = await response.json();
+    score.textContent = data.score;
+
+    if (!board.querySelectorAll(".circle").length) {
+      const times = getRandomNum(1, 20);
+      start(secs, times);
+    }
   } else if (e.target.tagName !== "BUTTON" && !isRestart) {
     gameOver();
   }
@@ -41,7 +71,9 @@ seconds.addEventListener("click", (e) => {
     timeOfStart.style.transform = "translateY(0)";
     selection.style.transform = "translateY(100vh)";
     startButton.style.transform = "translateY(200vh)";
-    const secs = e.target.dataset.sec;
+    secs = e.target.dataset.sec;
+    record.style.opacity = 1;
+    record.children[0].textContent = localStorage.getItem(secs);
     nullStart();
     timeOfStart.style.opacity = 1;
     setTimeout(() => {
@@ -63,6 +95,7 @@ title.children[1].addEventListener("click", () => {
 
   selection.style.transform = "translateY(0)";
   title.classList.remove("gameover");
+  record.style.opacity = 0;
 });
 
 function start(secs, times) {
@@ -120,6 +153,7 @@ function getRandomNum(max, min) {
 
 function againCircle(circle, secs) {
   circle.remove();
+
   const times = getRandomNum(1, 20);
   start(secs, times);
 }
@@ -136,21 +170,70 @@ function updTimer(secs) {
   }, 1000);
 }
 
-function gameOver() {
-  clearInterval(timerId);
-  const circles = document.querySelectorAll(".circle");
-  circles.forEach((circle) => {
-    if (circle.animationEndHandler) {
-      circle.removeEventListener("animationend", circle.animationEndHandler);
-      circle.style.pointerEvents = "none";
+async function gameOver() {
+  try {
+    clearInterval(timerId);
+
+    const circles = document.querySelectorAll(".circle");
+    circles.forEach((circle) => {
+      if (circle.animationEndHandler) {
+        circle.removeEventListener("animationend", circle.animationEndHandler);
+        circle.style.pointerEvents = "none";
+      }
+    });
+    board.removeEventListener("click", boardClickHandler);
+    title.children[0].innerHTML = `Ваш счет: ${score.textContent}`;
+    title.classList.add("gameover");
+    const response = await fetch("/update-score", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ action: "reset" }),
+    });
+    const data = await response.json();
+
+    if (!data || typeof data.score === "undefined") {
+      alert("Произошла ошибка при сбросе счета. Попробуйте позже");
+      return location.reload();
     }
-  });
-  title.children[0].innerHTML = `Ваш счет: ${num}`;
-  title.classList.add("gameover");
+
+    const localRecord = localStorage.getItem(secs);
+
+    if (
+      localRecord !== undefined &&
+      localRecord !== null &&
+      data.score > localRecord
+    ) {
+      record.innerHTML = `Новый рекорд: <span>${data.score}</span>`;
+      const recordsFetch = await fetch("/set-records", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          localRecord: localRecord,
+          score: data.score,
+          secs: secs,
+        }),
+      });
+
+      const recordsData = await recordsFetch.json();
+
+      if (recordsData.success) {
+        return localStorage.setItem(secs, data.score);
+      } else {
+        alert("Ошибка");
+        return location.reload();
+      }
+    }
+  } catch (error) {
+    console.error("Произошла ошибка:", error);
+    alert("Произошла ошибка. Пожалуйста, попробуйте снова.");
+  }
 }
 
 function nullStart() {
-  num = 0;
   timer.textContentF;
   score.textContent = 0;
   timer.textContent = "00";

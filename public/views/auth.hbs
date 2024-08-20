@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{{title}}}</title>
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/media.css" />
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h1>Авторизация</h1>
+      <form class="registration" id='auth'>
+        <label for="login">Ваш никнейм:</label>
+        <input type="text" name="login" id="login" required />
+        <span id="loginError" class="error">0</span>
+        <label for="password">Ваш пароль:</label>
+        <input type="text" name="password" id="password" required />
+        <span id="passwordError" class="error">0</span>
+        <button type="submit">Отправить</button>
+        <div class="link--wrapper" style="text-align: center;">
+          <a href="/reg">Зарегистрироваться</a>
+        </div>
+      </form>
+    </div>
+
+    <script async src="../scripts/purify.min.js"></script>
+    <script async src="../scripts/auth.js"></script>
+  </body>
+</html>

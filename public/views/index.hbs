@@ -1,20 +1,20 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>{{{title}}}</title>
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/media.css" />
   </head>
 
   <body>
+
     <div class="board">
       <div class="gameField">
         <div class="timer">00</div>
         <div class="score">0</div>
-        <div class="record">Ваш рекорд: <span>0</span></div>
+        <div class="record" style="opacity: 0;">Ваш рекорд: <span>0</span></div>
         <button class="start">Начать игру</button>
         <div class="selection">
           <p>Выберите длительность раунда</p>
@@ -34,7 +34,9 @@
         </h2>
       </div>
     </div>
-
+    <div class="go-to-records--wrapper">
+      <a href="/records" class="go-to-records">ПОСМОТРЕТЬ РЕКОРДЫ</a>
+    </div>
     <script src="scripts/script.js"></script>
   </body>
 </html>
