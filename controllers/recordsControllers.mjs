@@ -33,18 +33,25 @@ async function setRecords(req, res) {
     parseInt(user.records[secs]) === parseInt(localRecord) &&
     parseInt(score) > parseInt(localRecord)
   ) {
-    const newUser = await User.findByIdAndUpdate(
-      user._id,
-      { [`records.${secs}`]: score },
-      { new: true }
-    );
-    const userInfo = {
-      _id: newUser._id,
-      nick: newUser.nick,
-      records: newUser.records,
-    };
-    userCache.set(user.nick, userInfo, 7200000);
-    res.json({ success: true });
+    try {
+      const newUser = await User.findByIdAndUpdate(
+        user._id,
+        { [`records.${secs}`]: score },
+        { new: true }
+      );
+      const userInfo = {
+        _id: newUser._id,
+        nick: newUser.nick,
+        records: newUser.records,
+      };
+      userCache.set(user.nick, userInfo, 7200000);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Ошибка при обновлении рекордов:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Ошибка при обновлении рекордов" });
+    }
   }
 }
 

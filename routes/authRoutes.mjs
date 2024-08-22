@@ -25,6 +25,9 @@ router.get("/index", checkToken, (req, res) => {
   res.render("index", { layout: false, title: "Играть" });
 });
 
+router.get("/", checkToken, (req, res) => {
+  res.render("index", { layout: false, title: "Играть" });
+});
 
 
 router.get("/clear-cookie", checkToken, clearCookie);

@@ -3,7 +3,6 @@ import { TimedCache } from "../models/TimedCache.mjs";
 const userCache = new TimedCache();
 async function getUserFromDB(req, res, next) {
   const nick = req.body.login;
-
   const haveUser = userCache.get(nick);
   if (haveUser) {
     req.body.user = haveUser;
@@ -14,17 +13,16 @@ async function getUserFromDB(req, res, next) {
     const user = await User.findOne({
       nick: nick,
     }).lean();
-    if (user) {
-      const userInfo = {
-        _id: user._id,
-        nick: user.nick,
-        records: user.records,
-      };
-      userCache.set(user.nick, userInfo, 7200000);
-      userCache.set(nick, user, 7200000);
-      req.body.user = user;
-      next();
+    if (!user) {
+      return res.json({
+        success: false,
+        message: { error: "Неверно введен логин или пароль" },
+      });
     }
+
+    userCache.set(nick, user, 7200000);
+    req.body.user = user;
+    next();
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -34,4 +32,4 @@ async function getUserFromDB(req, res, next) {
   }
 }
 
-export { getUserFromDB,userCache };
+export { getUserFromDB, userCache };

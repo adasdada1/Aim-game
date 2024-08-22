@@ -84,17 +84,21 @@ async function auth(req, res) {
         message: { error: "Неверно введен логин или пароль" },
       });
     const result = await bcrypt.compare(req.body.password, user.password);
-    if (!result)
+    if (!result) {
+      userCache.delete(user.nick);
       return res.json({
         success: false,
         message: { error: "Неверно введен логин или пароль" },
       });
+    }
+
     const token = jwt.sign({ login: req.body.login }, PRIVATE_KEY);
     res.cookie("authcookie", token, {
       maxAge: 7200000,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
     });
+
     return res.json({ success: true });
   } catch (error) {
     console.error(error);
@@ -148,10 +152,4 @@ function clearCookie(req, res) {
   }
 }
 
-export {
-  clearCookie,
-  registration,
-  checkToken,
-  joinedAccount,
-  auth,
-};
+export { clearCookie, registration, checkToken, joinedAccount, auth };

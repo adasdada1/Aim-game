@@ -18,13 +18,13 @@ app.use(helmet.xssFilter());
 app.use(helmet.referrerPolicy({ policy: "no-referrer" }));
 app.use(helmet.dnsPrefetchControl({ allow: false }));
 
-app.use(compression())
+// app.use(compression())
 
 app.use(cookieParser());
 registerRecordsHelper()
 registerHeaderParital()
 
-app.enable('view cache');
+// app.enable('view cache');
 app.set("views", "./public/views");
 app.set("view engine", "hbs");
 
