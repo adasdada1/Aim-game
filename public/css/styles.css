@@ -178,6 +178,7 @@ button {
           transform: translateX(-50%);
   top: 0;
   font-size: clamp(20px, 4vw, 25px);
+  text-align: center;
 }
 
 .circle {

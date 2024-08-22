@@ -5,10 +5,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import { router } from "./routes/routesAll.mjs";
+import compression from "compression";
 dotenv.config();
 
 const app = express();
-app.use(cookieParser());
+
 
 app.use(helmet.noSniff());
 app.use(helmet.frameguard({ action: "deny" }));
@@ -16,18 +17,21 @@ app.use(helmet.xssFilter());
 app.use(helmet.referrerPolicy({ policy: "no-referrer" }));
 app.use(helmet.dnsPrefetchControl({ allow: false }));
 
+app.use(compression())
+
+app.use(cookieParser());
 registerRecordsHelper()
 
-
+app.enable('view cache');
 app.set("views", "./public/views");
 app.set("view engine", "hbs");
+
 
 const port = process.env.PORT || 3000;
 
 app.use(express.static("public"));
 app.use(express.json());
 app.use(router);
-
 
 
 app.use("/", (req, res) => {
