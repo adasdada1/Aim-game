@@ -40,7 +40,7 @@ startButton.addEventListener("click", () => {
 async function boardClickHandler(e) {
   if (e.target.classList.contains("circle")) {
     e.target.remove();
-
+    score.textContent = parseInt(score.textContent) + 1;
     await fetch("/update-score", {
       method: "POST",
       headers: {
@@ -48,8 +48,6 @@ async function boardClickHandler(e) {
       },
       body: JSON.stringify({ action: "hit" }),
     });
-    // const data = await response.json();
-    score.textContent = parseInt(score.textContent) + 1;
 
     if (!board.querySelectorAll(".circle").length) {
       const times = getRandomNum(1, 20);
