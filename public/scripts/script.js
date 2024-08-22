@@ -41,15 +41,15 @@ async function boardClickHandler(e) {
   if (e.target.classList.contains("circle")) {
     e.target.remove();
 
-    const response = await fetch("/update-score", {
+    await fetch("/update-score", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ action: "hit" }),
     });
-    const data = await response.json();
-    score.textContent = data.score;
+    // const data = await response.json();
+    score.textContent = parseInt(score.textContent) + 1;
 
     if (!board.querySelectorAll(".circle").length) {
       const times = getRandomNum(1, 20);
@@ -73,6 +73,7 @@ seconds.addEventListener("click", (e) => {
     startButton.style.transform = "translateY(200vh)";
     secs = e.target.dataset.sec;
     record.style.opacity = 1;
+    record.innerHTML = `Ваш рекорд: <span></span>`;
     record.children[0].textContent = localStorage.getItem(secs);
     nullStart();
     timeOfStart.style.opacity = 1;

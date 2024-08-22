@@ -1,5 +1,6 @@
 import express from "express";
 import { registerRecordsHelper } from "./models/RecordsHelper.mjs"; 
+import { registerHeaderParital } from "./models/HeaderPartial.mjs";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
@@ -21,6 +22,7 @@ app.use(compression())
 
 app.use(cookieParser());
 registerRecordsHelper()
+registerHeaderParital()
 
 app.enable('view cache');
 app.set("views", "./public/views");
