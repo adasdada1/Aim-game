@@ -81,7 +81,7 @@ async function auth(e) {
     const data = await response.json();
 
     if (data.success) {
-      window.location.href = "http://localhost:3000/index";
+      window.location.href = "/index";
     } else {
       for (const err in data.message) {
         alert(data.message[err]);
